@@ -10,62 +10,52 @@ package Project1;
 public class Vehicle {
 	
 	private char type;
-	private int timeEntered;
-    private int numDoors;
-    private int numWheels;
-	private int year;
-	private String color;	
-	private String make;
+	private int timeEntered, ID;
+   	
+	private int leaveAt;
 	
-	private int truckWait = 0, carWait = 0;
+	private boolean waiting = false;
+
+	public void setGreenEntered(int i)
+	{
+		if (waiting == false)
+		{	
+			if (type == 'c')
+			{
+				leaveAt = i + 1;
+			}
+			else if (type == 't')
+			{
+				leaveAt = i + 2;
+			}
+			
+			//System.out.println( leaveAt + " " + i );
+			waiting = true;
+		}
+	}
+
+	public int getLeaveAt()
+	{
+		return leaveAt;
+	}
+	
+	public int getID()
+	{
+		return ID;
+	}
 
 /**
  * Constructor of the class. Default Vehicles will be created, however changes can be made using mutators/setters.	
  * @param type heavy = h or light = l vehicle.
  */
-	public Vehicle (char type) {
+	public Vehicle (char type, int id) {
 		
 		if (type == 'c' || type == 't')
-			
-		if (type == 't') {
-			this.type = 't';
-			numDoors = 2;
-			year = 2000;
-			numWheels = 18;
-			color = "White";
-			make = "GM";			
-		}
-		
-		else {
-			
-			this.type = 'c';
-			numDoors = 4;
-			year = 2010;
-			numWheels = 4;
-			color = "Red";
-			make = "Toyota";
-		}
-		
-		this.type = type;				
+		{
+			this.type = type;
+			ID = id;
+		}						
 	}
-	
-	public int getTruckWait () 
-	{	return truckWait;	}
-	
-	public void addTruckWait () 
-	{	truckWait++;	}
-	
-	public void setTruckWait (int i) 
-	{	truckWait = 1;	}
-	
-	public int getCarWait () 
-	{	return carWait;	}
-	
-	public void addCarWait () 
-	{	carWait++;	}
-	
-	public void setCarWait(int i)
-	{	carWait = i;	}
 
 	public char getType () {
 		
@@ -82,68 +72,10 @@ public class Vehicle {
 		return timeEntered;
 	}
 	
-	public int getNumDoors() {
-		return numDoors;
-	}
-
-	public void setNumDoors(int numDoors) {
-		
-		if (numDoors >= 2 && numDoors <= 4)
-		this.numDoors = numDoors;
-	}
-
-
-	public int getNumWheels() {
-		return numWheels;
-	}
-
-	public void setNumWheels(int numWheels) {
-		
-		if (numWheels > 4 && numWheels < 18 && numWheels%2 == 0 )
-			
-		this.numWheels = numWheels;
-	}
-
-
-	public int getYear() {
-		
-		return year;
-	}
-
-
-	public void setYear(int year) {
-		
-		this.year = year;
-	}
-
-
-	public String getColor() {
-		
-		return color;
-	}
-
-
-	public void setColor(String color) {
-		
-		this.color = color;
-	}
-
-
-	public String getMake() {
-		
-		return make;
-	}
-
-
-	public void setMake(String make) {
-		
-		this.make = make;
-	}
-	
  public String toString () {
 	String str = "";
 	
-	str += "Make: " + make + " Color: " + color + " Number of doors: " + numDoors + " Number of wheels: " + numWheels + " Year: " + year;
+	str += "Vehicle Type: " + type + "  Vehicle ID: " + ID;
 	
 	return str;
  }
@@ -153,8 +85,8 @@ public class Vehicle {
  
  public static void main (String [] args) {
 	 
-	 Vehicle car = new Vehicle ('l');
-	 car.setMake("Honda");
+	 Vehicle car = new Vehicle ('l', 0);
+	 
 	System.out.println( car.toString() );
  }
 }
