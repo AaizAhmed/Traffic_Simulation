@@ -17,8 +17,9 @@ public class TrafficSim
 	
 	//Variables 
 	//private String fileName;
-	private static int timer = 0; 
-	private int count = 0;
+	private int timer = 0; 
+	private int count = 0, leave = 0;
+	
 	private Project1.LinkedList result;
 
 	/**
@@ -153,8 +154,8 @@ public class TrafficSim
 		boolean greenNS = true, greenEW = false;
 		int minNS = 0, minEW = 0;
 		
-		System.out.printf("%d %d %d %d %d %d %d %d\n", northCarFlow, northTruckFlow, southCarFlow, 
-						  southTruckFlow, eastCarFlow, eastTruckFlow, westCarFlow, westTruckFlow);
+		//System.out.printf("%d %d %d %d %d %d %d %d\n", northCarFlow, northTruckFlow, southCarFlow, 
+			//			  southTruckFlow, eastCarFlow, eastTruckFlow, westCarFlow, westTruckFlow);
 		
 		//Adding cars to the queue according to the flow rates.
 		for (int i = 1; i < 120; i++) 
@@ -178,12 +179,12 @@ public class TrafficSim
 
 			//South Flow
 			if ( i % southCarFlow == 0) 
-			{
-				System.out.println("I am here adding car at time: " + i);
+			{				
 				c = new Vehicle('c');
 				c.setTimeEntered(i);
 
 				addVehicle('S', c);
+				//System.out.println("I am here adding car at time: " + i + "\n" + southBound.toString());
 			}
 
 			if (i % southTruckFlow == 0) 
@@ -290,29 +291,35 @@ public class TrafficSim
 			
 			if (temp.getType() == 't')
 			{
-				count++;
+				temp.addTruckWait();
 			}
 			
-			if (count == 2)
+			if (temp.getType() == 'c')
+			{
+				temp.addCarWait();
+			}		
+			
+			if (temp.getTruckWait() == 2 && temp.getType() == 't')
 			{
 				queue.remove();
 				result.add(temp, time - temp.getTimeEntered());
-				count = 0;
+				temp.setTruckWait(0);
 			}
 					
-			if ( temp.getType() == 'c' )
+			if (temp.getCarWait() == 1 && temp.getType() == 'c')
 			{
 				queue.remove();
-				result.add(temp, time - temp.getTimeEntered());					
-			}
+				result.add(temp, time - temp.getTimeEntered());	
+				temp.setCarWait(0);
+			}				
 		}
 	}
 
 	private String printBoard( ) 
 	{		
-		StringBuffer result = new StringBuffer();
-		result.append("ADD HERE" + 00);		
-		result.toString();
+//		StringBuffer result = new StringBuffer();
+//		result.append("ADD HERE" + 00);		
+//		result.toString();
 
 		String str = "";
 

@@ -21,27 +21,3 @@ public class Driver {
 
 }
 
-/**
-
-private void removeVehicle(Queue<Vehicle> queue, int time)
-	{		
-		if (queue.size() > 0)
-		{
-			Vehicle temp = queue.peek();
-			
-			if (temp.getType() == 't')
-			{
-				count = time;
-			}
-			
-			System.out.println(temp.getType() + " " + time + " " + count);
-					
-			if ( temp.getType() == 'c' || time == count+1 )
-			{
-				queue.remove();
-				result.add(temp, time - temp.getTimeEntered());					
-			}
-		}
-	}
-
-*/

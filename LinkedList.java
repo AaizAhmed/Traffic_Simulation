@@ -52,7 +52,7 @@ public class LinkedList
 
 	public float average() 
 	{
-		int time = 0; 
+		float time = 0; 
 		Node x = FRONT.link;
 
 		while (x != null) 
@@ -61,7 +61,7 @@ public class LinkedList
 			x = x.link;			
 		}		
 		
-		return (float) time/size;
+		return time/size;
 	}
 	
 	public boolean isEmpty () 
