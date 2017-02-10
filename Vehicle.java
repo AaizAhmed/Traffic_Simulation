@@ -16,6 +16,8 @@ public class Vehicle {
 	private int year;
 	private String color;	
 	private String make;
+	
+	private int truckWait = 0;
 
 /**
  * Constructor of the class. Default Vehicles will be created, however changes can be made using mutators/setters.	
@@ -46,6 +48,12 @@ public class Vehicle {
 		
 		this.type = type;				
 	}
+	
+	public int getTWait () 
+	{	return truckWait;	}
+	
+	public void setgetTWait (int i) 
+	{	truckWait = i;	}
 
 	public char getType () {
 		

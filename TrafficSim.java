@@ -18,7 +18,7 @@ public class TrafficSim
 	//Variables 
 	//private String fileName;
 	private static int timer = 0; 
-	private int wait;
+	private int count = 0;
 	private Project1.LinkedList result;
 
 	/**
@@ -148,15 +148,16 @@ public class TrafficSim
 		westCarFlow = 60/flowRate.getWestFlowRateCars();
 		westTruckFlow = 60/flowRate.getWestFlowRateTrucks();	
 
-		Vehicle c;  
-		Vehicle temp;
-		Vehicle t;
+		Vehicle c, t;
+				
+		boolean greenNS = true, greenEW = false;
+		int minNS = 0, minEW = 0;
 		
-		int count = 1, leave = 0;   
-		boolean car = false, truck = false;
+		System.out.printf("%d %d %d %d %d %d %d %d\n", northCarFlow, northTruckFlow, southCarFlow, 
+						  southTruckFlow, eastCarFlow, eastTruckFlow, westCarFlow, westTruckFlow);
 		
 		//Adding cars to the queue according to the flow rates.
-		for (int i = 1; i < 121; i++) 
+		for (int i = 1; i < 120; i++) 
 		{
 			//North Flow
 			if ( i % northCarFlow == 0) 
@@ -178,6 +179,7 @@ public class TrafficSim
 			//South Flow
 			if ( i % southCarFlow == 0) 
 			{
+				System.out.println("I am here adding car at time: " + i);
 				c = new Vehicle('c');
 				c.setTimeEntered(i);
 
@@ -227,7 +229,48 @@ public class TrafficSim
 			}
 
 			//Removing vehicles
-		
+						
+			if (minNS >= 30)
+			{
+				if (eastBound.size() > 0 || westBound.size() > 0)
+				{
+					greenNS = false;
+					greenEW = true;
+					minNS = 0;
+				}
+			}
+			
+			if (minEW >= 10)
+			{
+				if ( minEW == 30 )
+				{
+					greenNS = true;
+					greenEW = false;
+					minEW = 0;
+				}
+				else if ( eastBound.isEmpty() && westBound.isEmpty() )
+				{	
+					greenNS = true;
+					greenEW = false;
+					minEW = 0;
+				}
+			}
+			
+			
+			if ( greenNS )
+			{
+				removeVehicle(northBound, i);
+				removeVehicle(southBound, i);				
+				minNS++;
+			}
+			
+			if ( greenEW )
+			{
+				removeVehicle(eastBound, i);
+				removeVehicle(westBound, i);				
+				minEW++;
+			}
+					
 			timer++;
 			System.out.println (printBoard());
 		}
@@ -237,6 +280,32 @@ public class TrafficSim
 		System.out.println("The number of cars that passed through the intersection is: " + result.getCars() ); 
 		System.out.println("The number of trucks that passed through the intersection is: " + result.getTrucks() ); 
 		System.out.println("The average wait time for this intersection is: " + result.average() ); 
+	}
+	
+	private void removeVehicle (Queue<Vehicle> queue, int time)
+	{		
+		if (queue.size() > 0)
+		{
+			Vehicle temp = queue.peek();
+			
+			if (temp.getType() == 't')
+			{
+				count++;
+			}
+			
+			if (count == 2)
+			{
+				queue.remove();
+				result.add(temp, time - temp.getTimeEntered());
+				count = 0;
+			}
+					
+			if ( temp.getType() == 'c' )
+			{
+				queue.remove();
+				result.add(temp, time - temp.getTimeEntered());					
+			}
+		}
 	}
 
 	private String printBoard( ) 
