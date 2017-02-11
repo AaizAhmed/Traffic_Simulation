@@ -8,7 +8,8 @@
  * @section  01
  */
 
-package Project1;
+//package Project1;
+package project1;
 
 public class LinkedList 
 {

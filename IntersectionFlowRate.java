@@ -5,7 +5,8 @@
   * @project CMSC 341 - Spring 2014 - Project #1 Traffic simulator.
   * @section 01
 */
-package Project1;
+//package Project1;
+package project1;
 
 public class IntersectionFlowRate {
 	

@@ -5,7 +5,8 @@
   * @project CMSC 341 - Spring 2014 - Project #1 Traffic simulator.
   * @section 01
 */
-package Project1;
+//package Project1;
+package project1;
 
 public class Vehicle {
 	
@@ -16,6 +17,21 @@ public class Vehicle {
 	
 	private boolean waiting = false;
 
+	
+
+/**
+ * Constructor of the class. Default Vehicles will be created, however changes can be made using mutators/setters.	
+ * @param type heavy = h or light = l vehicle.
+ */
+	public Vehicle (char type, int id) {
+		
+		if (type == 'c' || type == 't')
+		{
+			this.type = type;
+			ID = id;
+		}						
+	}
+	
 	public void setGreenEntered(int i)
 	{
 		if (waiting == false)
@@ -29,7 +45,6 @@ public class Vehicle {
 				leaveAt = i + 2;
 			}
 			
-			//System.out.println( leaveAt + " " + i );
 			waiting = true;
 		}
 	}
@@ -42,19 +57,6 @@ public class Vehicle {
 	public int getID()
 	{
 		return ID;
-	}
-
-/**
- * Constructor of the class. Default Vehicles will be created, however changes can be made using mutators/setters.	
- * @param type heavy = h or light = l vehicle.
- */
-	public Vehicle (char type, int id) {
-		
-		if (type == 'c' || type == 't')
-		{
-			this.type = type;
-			ID = id;
-		}						
 	}
 
 	public char getType () {
