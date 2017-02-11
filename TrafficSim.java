@@ -155,13 +155,7 @@ public class TrafficSim
 				
 		boolean greenNS = true, greenEW = false;
 		int minNS = 0, minEW = 0;
-		
-		//System.out.printf("%d %d %d %d %d %d %d %d\n", northCarFlow, northTruckFlow, southCarFlow, 
-			//			  southTruckFlow, eastCarFlow, eastTruckFlow, westCarFlow, westTruckFlow);
-		
-		//northBound.peek().setGreenEntered(0);
-		//southBound.peek().setGreenEntered(0);
-		
+			
 		int total = 9, count = 1; 
 		//Adding cars to the queue according to the flow rates.
 		for (int i = 0; i < 120; i++) 
@@ -189,8 +183,7 @@ public class TrafficSim
 				c = new Vehicle('c', total); total++;
 				c.setTimeEntered(i);
 
-				addVehicle('S', c);
-				//System.out.println("I am here adding car at time: " + i + "\n" + southBound.toString());
+				addVehicle('S', c);				
 			}
 
 			if (count % southTruckFlow == 0) 
@@ -246,8 +239,7 @@ public class TrafficSim
 					greenEW = true;
 					
 					greenLightCase(eastBound, i);
-					greenLightCase(westBound, i);
-					
+					greenLightCase(westBound, i);					
 					minNS = 0;
 				}
 			}
@@ -255,21 +247,18 @@ public class TrafficSim
 			if (minEW >= 9)
 			{
 				if ( minEW > 29 )
-				{
-					//System.out.println("This is " + i);
+				{					
 					greenNS = true;
 					greenEW = false;
 					
 					greenLightCase(northBound, i);
-					greenLightCase(southBound, i);
-					
+					greenLightCase(southBound, i);					
 					minEW = 0;
 				}				
 				if ( eastBound.isEmpty() )
 				{	
 					if ( westBound.isEmpty())
-					{
-						//System.out.println("This is " + i);
+					{						
 						greenNS = true;
 						greenEW = false;
 						
@@ -281,27 +270,24 @@ public class TrafficSim
 			}			
 			
 			if ( greenNS )
-			{
-				//System.out.println("North-South: " + i + " MinNS " + minNS + "\n");
-				
+			{				
 				removeVehicle(northBound, i);			
 				removeVehicle(southBound, i);				
 				minNS++;
 			}
 			
 			if ( greenEW )
-			{	
-				//System.out.println("East-West: " + i + " MinEW " + minEW + "\n");
-				
+			{				
 				removeVehicle(eastBound, i);				
 				removeVehicle(westBound, i);				
 				minEW++;
 			}
 			
-			timer++;
-			System.out.println (printBoard());
-			
-			
+			if (timer < 119) 
+			{
+				timer++;
+				System.out.println (printBoard());	
+			}					
 		}
 		
 		System.out.println("The final results are:");		
@@ -323,7 +309,6 @@ public class TrafficSim
 	
 	private void removeVehicle (Queue<Vehicle> queue, int time)
 	{		
-		
 		if (queue.size() > 0)
 		{				
 			Vehicle temp = queue.peek();			
@@ -334,21 +319,15 @@ public class TrafficSim
 				result.add(temp, time - temp.getTimeEntered());				
 			}	
 			
-			//System.out.println( "Queue Empty: " + queue.isEmpty() );
 			if (queue.size() > 0)	
 			{ 
-				queue.peek().setGreenEntered(time);					
-				System.out.println( queue.peek().getID() + " " + queue.peek().getLeaveAt() + " " + time );				
+				queue.peek().setGreenEntered(time);							
 			}											
 		}
 	}
 
 	private String printBoard( ) 
-	{		
-//		StringBuffer result = new StringBuffer();
-//		result.append("ADD HERE" + 00);		
-//		result.toString();
-
+	{
 		String str = "";
 
 		//Line 6
@@ -601,10 +580,6 @@ public class TrafficSim
 	//Unit testing
 	public static void main (String [] args) {
 
-		TrafficSim  TS = new TrafficSim ("input3.txt");
-
-		//TS.addToQueue();	
-		//System.out.println("Size of linked list: " + TS.result.getSize());		
-		//System.out.println("Average: " + TS.result.average() + "\nCar, Trucks: " + TS.result.getCars() + " " + TS.result.getTrucks());
+		TrafficSim  TS = new TrafficSim ("input1.txt");	
 	} 
 }
